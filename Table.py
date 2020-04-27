@@ -58,3 +58,5 @@ class Table:
     def shuffle(self) -> None:
         """shuffle the cards in this table."""
         pass
+    
+    def new_func(self) -> None:
