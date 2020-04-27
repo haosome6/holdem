@@ -17,7 +17,7 @@ class Table:
     """
     _cards: list[Card]
     _boards: list[Card]
-    _players: list[Player]
+    _players: PlayersLinkedList
     _pot: int
     _small_blind: int
     _big_blind: int
