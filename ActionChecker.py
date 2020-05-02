@@ -23,10 +23,21 @@ class ActionChecker:
     _min_valid_raise: int
 
     def set_biggest_bet(self, amount: int) -> None:
+        pass
 
     def get_biggest_bet(self) -> int:
+        pass
 
     def set_min_valid_raise(self, amount: int) -> None:
+        pass
 
     def get_biggest_bet(self) -> int:
+        pass
+
+    def valid_action(self, amount: int) -> bool:
+        """A player's call equals the current biggest bet; or a raise which
+        following the rules above. However, the player always have the option to
+        all-in, this decision is valid regardless of what the current biggest
+        bet is.
+        """
 
