@@ -1,7 +1,7 @@
 from typing import List
-from PlayersLinkedList import PlayersLinkedList
-from Player import Player
-from Card import Card
+from player_linked_list import PlayersLinkedList
+from player import Player
+from card import Card
 
 
 class Table:
@@ -58,5 +58,5 @@ class Table:
     def shuffle(self) -> None:
         """shuffle the cards in this table."""
         pass
-    
+
     def new_func(self) -> None:

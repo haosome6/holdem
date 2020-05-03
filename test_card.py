@@ -1,4 +1,4 @@
-from Card import Card
+from card import Card
 
 
 def test__ls_() -> None:

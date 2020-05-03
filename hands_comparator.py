@@ -1,5 +1,5 @@
-from Card import Card
-from Player import Player
+from card import Card
+from player import Player
 
 
 class HandsComparator:

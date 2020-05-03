@@ -1,6 +1,9 @@
-from typing import List, Optional
-from Player import Player
-from Card import Card
+from __future__ import annotations
+
+from typing import Optional
+
+from card import Card
+from player import Player
 
 
 class PlayerNode:

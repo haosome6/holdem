@@ -1,6 +1,6 @@
-from PlayerNode import PlayerNode
+from player_node import PlayerNode
 from typing import Optional, Any
-from Player import Player
+from player import Player
 
 
 class PlayersLinkedList:
