@@ -54,7 +54,7 @@ class PlayerNode:
 
     def get_item(self) -> Optional[Player, int]:
         """Get the item of the PlayerNode."""
-        return self._item
+        return self._player
 
     def set_in_game(self, in_game: bool) -> None:
         """Set the _in_game variable of the PlayerNode by a given bool"""
