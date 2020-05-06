@@ -22,15 +22,15 @@ class PlayerNode:
     next:
         The next node in the player linked list, or None if there are no more nodes.
     """
-    _item: Optional[Player]
+    _player: Optional[Player]
     _hands: list[Card]
     _betting: int
     _in_game: bool
     next: Optional[PlayerNode]
 
-    def __init__(self, player: Optional[Player, int]) -> None:
+    def __init__(self, player: Optional[Player]) -> None:
         """Initialize an PlayerNode which is empty."""
-        pass
+        self._player = player
 
     def set_hands(self, hands: list[Card]) -> None:
         """Set the current hands of the PlayerNode by given a list of cards."""
