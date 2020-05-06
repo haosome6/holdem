@@ -48,12 +48,12 @@ class PlayerNode:
         """Get the amount of betting of the PlayerNode."""
         return self._betting
 
-    def set_item(self, player: Optional[Player, int]) -> None:
-        """Set the item of the PlayerNode."""
+    def set_player(self, player: Optional[Player]) -> None:
+        """Set the player or null of the PlayerNode."""
         self._player = player
 
-    def get_item(self) -> Optional[Player, int]:
-        """Get the item of the PlayerNode."""
+    def get_player(self) -> Optional[Player]:
+        """Get the player of the PlayerNode."""
         return self._player
 
     def set_in_game(self, in_game: bool) -> None:
