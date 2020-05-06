@@ -7,10 +7,15 @@ class PlayersLinkedList:
     """A players linked list.
 
     === Attributes ===
-    _first: the first PlayerNode
-    curr: the current PlayerNode
+    _first:
+        the first PlayerNode
+    button:
+        the button of the current round
+    curr:
+        the current PlayerNode that is acting
     """
     _first: Optional[PlayerNode]
+    button: Optional[PlayerNode]
     curr: Optional[PlayerNode]
 
     def __init__(self, number: int) -> None:
@@ -21,16 +26,15 @@ class PlayersLinkedList:
     def __getitem__(self, index: int) -> Any:
         pass
 
-    def next_player(self) -> Optional[Player]:
-        """"return the next player in the PlayersLinkedList, or return None
-        if it does not have a next player."""
+    def next_player(self) -> None:
+        """"Set the next player of current player as current player."""
         pass
 
     def add_player(self, index: int, player: Player) -> bool:
-        """return true if the player is added successfully in the
+        """Return true if the player is added successfully in the
         PlayersLinkedList, otherwise return false."""
         pass
 
     def delete_player(self, player: Player) -> None:
-        """delete the given player from the PlayersLinkedList."""
+        """Delete the given player from the PlayersLinkedList."""
         pass
