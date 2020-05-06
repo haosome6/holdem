@@ -50,7 +50,7 @@ class PlayerNode:
 
     def set_item(self, player: Optional[Player, int]) -> None:
         """Set the item of the PlayerNode."""
-        self._item = player
+        self._player = player
 
     def get_item(self) -> Optional[Player, int]:
         """Get the item of the PlayerNode."""
