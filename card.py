@@ -20,31 +20,31 @@ compare_map = {
 class Card:
     """A card.
 
-    === Private Attributes ===
-    _number:
+    === Public Attributes ===
+    number:
         The number of the card, "A" is the biggest, and "2" is the smallest.
-    _suit:
+    suit:
         The suit of the card.
 
     === Representation Invariants ===
     - _suit must be one of "s", "h", "d", and "c"(represents spade, heart,
       diamond, and club respectively)
     """
-    _number: str
-    _suit: str
+    number: str
+    suit: str
 
     def __init__(self, number: str, suit: str) -> None:
         """Initialize the card with number <number> and suit <suit>.
         """
-        self._number = number
-        self._suit = suit
+        self.number = number
+        self.suit = suit
 
     def __eq__(self, other: Card) -> bool:
         """Return True iff this Card is equal to <other>.
 
         Two cards are equal if they have the same number.
         """
-        return compare_map[self._number] == compare_map[other._number]
+        return compare_map[self.number] == compare_map[other.number]
 
     def __ne__(self, other: Card) -> bool:
         """Return True iff this Card is not equal to <other>.
@@ -54,12 +54,12 @@ class Card:
     def __lt__(self, other: Card) -> bool:
         """Return True iff this Card is less than <other>.
         """
-        return compare_map[self._number] < compare_map[other._number]
+        return compare_map[self.number] < compare_map[other.number]
 
     def __le__(self, other: Card) -> bool:
         """Return True iff this Card is less than or equal to <other>.
         """
-        return compare_map[self._number] <= compare_map[other._number]
+        return compare_map[self.number] <= compare_map[other.number]
 
     def __gt__(self, other: Card) -> bool:
         """Return True iff this Card is greater than <other>.
@@ -70,13 +70,3 @@ class Card:
         """Return True iff this Card is greater than or equal to <other>.
         """
         return not self.__lt__(other)
-
-    def get_number(self) -> str:
-        """Return the number of the card.
-        """
-        return self._number
-
-    def get_suit(self) -> str:
-        """Return the suit of the card.
-        """
-        return self._suit
