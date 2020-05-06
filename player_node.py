@@ -22,7 +22,7 @@ class PlayerNode:
     next:
         The next node in the player linked list, or None if there are no more nodes.
     """
-    _item: Optional[Player, int]
+    _item: Optional[Player]
     _hands: list[Card]
     _betting: int
     _in_game: bool
