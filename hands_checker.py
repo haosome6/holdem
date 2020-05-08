@@ -35,15 +35,17 @@ class HandsChecker:
         iff <cards> makes a straight flush, otherwise return the result of
         running _full_house with <cards>.
         """
-        suits = _suit_checker(cards)
+        suits_occurrence = _suit_checker(cards)
         suit = ''
 
         # if there are more than 5 cards have same suit, extract them
-        for s, number in suits.items():
-            if number > 4:
-                suit = s
-            else:
-                return self._four_of_a_kind(cards)
+        max_occurrence = max(suits_occurrence.values())
+        if max_occurrence < 5:
+            return self._four_of_a_kind(cards)
+        else:
+            for s, occurrence in suits_occurrence.items():
+                if occurrence >= 5:
+                    suit = s
         suited_cards = []
         for card in cards:
             if card.suit == suit:
