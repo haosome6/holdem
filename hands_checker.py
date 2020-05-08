@@ -38,7 +38,7 @@ class HandsChecker:
         suits_occurrence = _suit_checker(cards)
         suit = ''
 
-        # if there are more than 5 cards have same suit, extract them
+        # if there are more than 4 cards have same suit, extract them
         max_occurrence = max(suits_occurrence.values())
         if max_occurrence < 5:
             return self._four_of_a_kind(cards)
@@ -47,15 +47,19 @@ class HandsChecker:
                 if occurrence >= 5:
                     suit = s
         suited_cards = []
-        for card in cards:
-            if card.suit == suit:
-                suited_cards.append(card)
+        cards.sort(reverse=True)
+        i = 0
+        while len(suited_cards) <= 5 and i < len(cards):
+            if cards[i].suit == suit:
+                suited_cards.append(cards[i])
+            i += 1
 
-        # if suited cards have flush, then it's a straight flush
+        # suited cards is either straight flush, or flush;
+        # more than 4 suited cards can't make four of a kind, nor full house
         if self._straight(suited_cards)[0] == 'straight':
             return 'straight flush', self._straight(suited_cards)[1]
         else:
-            return self._four_of_a_kind(cards)
+            return 'flush', suited_cards
 
     def _four_of_a_kind(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "four of a kind" and five cards make four of a kind in Tuple
@@ -87,13 +91,8 @@ class HandsChecker:
         <cards> makes a full house, otherwise return the result of running
         _flush with <cards>.
         """
-    
 
-
-    def _flush(self, cards: List[Card]) -> Tuple[str, List[Card]]:
-        """Return "flush" and five cards make flush in Tuple iff <cards> makes a
-        flush, otherwise return the result of running _straight with <cards>.
-        """
+    # no _flush is needed, which is checked in _straight_flush
 
     def _straight(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "straight" and five cards make straight in Tuple iff <cards>
