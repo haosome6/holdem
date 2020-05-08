@@ -13,6 +13,19 @@ def _suit_checker(cards: List[Card]) -> Dict[str, int]:
     return suits
 
 
+def _number_checker(cards: List[Card]) -> Dict[str, int]:
+    """Return a dictionary mapping from the number to the corresponding number
+    of cards in <cards>.
+    """
+    numbers = {}
+    for card in cards:
+        if card.number not in numbers:
+            numbers[card.number] = 0
+        else:
+            numbers[card.number] += 1
+    return numbers
+
+
 class HandsChecker:
     """To check the strength of hands.
     """
@@ -47,20 +60,33 @@ class HandsChecker:
         iff <cards> makes a four of a kind, otherwise return the result of
         running _full_house with <cards>.
         """
-        numbers = {}
-        for card in cards:
-            if card.number not in numbers:
-                numbers[card.number] = 0
-            else:
-                numbers[card.number] += 1
-
-
+        numbers = _number_checker(cards)
+        # the tuple max_card records the number and the number of occurrence of
+        # the card with the highest occurrence time
+        max_card = (None, 0)
+        for number, occurrence in numbers.items():
+            if occurrence > max_card[1]:
+                max_card = (number, occurrence)
+        if max_card[1] < 4:
+            return self._full_house(cards)
+        else:
+            res = []
+            temple_cards = []
+            for card in cards:
+                if card.number == max_card[0]:
+                    res.append(card)
+                else:
+                    temple_cards.append(card)
+            res.append(temple_cards.sort()[-1])
+            return 'four of a kind', res
 
     def _full_house(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "full house" and five cards make full house in Tuple iff
         <cards> makes a full house, otherwise return the result of running
         _flush with <cards>.
         """
+    
+
 
     def _flush(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "flush" and five cards make flush in Tuple iff <cards> makes a
