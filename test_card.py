@@ -15,6 +15,16 @@ def test__ls_() -> None:
     assert c4 <= c3
 
 
+def test_sort() -> None:
+    c1 = Card('A', 's')
+    c2 = Card('J', 's')
+    c3 = Card('5', 'c')
+    cards = [c2, c1, c3]
+    cards.sort()
+    assert cards[0].number == '5'
+    assert cards[1].number == 'J'
+
+
 if __name__ == "__main__":
     import pytest
 
