@@ -47,6 +47,25 @@ def test_four_of_a_kind() -> None:
     assert hands_checker.get_hands_cards(cards_1)[4].number == 'A'
 
 
+def test_flush() -> None:
+    cQ = Card('Q', 's')
+    cJ = Card('J', 's')
+    c9 = Card('9', 's')
+    c5 = Card('5', 's')
+    c3 = Card('3', 's')
+    c2 = Card('2', 's')
+    c6h = Card('6', 'h')
+
+    # flush of Q
+    cards_1 = [c2, c3, c6h, c9, cQ, cJ, c5]
+    assert hands_checker.get_hands_type(cards_1) == 'flush'
+
+    result_cards = hands_checker.get_hands_cards(cards_1)
+    assert len(result_cards) == 5
+    assert result_cards[0].number == 'Q'
+    assert result_cards[-1].number == '3'
+
+
 if __name__ == "__main__":
     import pytest
 
