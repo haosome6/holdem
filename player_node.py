@@ -21,12 +21,15 @@ class PlayerNode:
         not.
     next:
         The next node in the player linked list, or None if there are no more nodes.
+    playing_chips:
+        The chips that a player is playing on the table.
     """
     _player: Optional[Player]
     _hands: list[Card]
     _betting: int
     _in_game: bool
     next: Optional[PlayerNode]
+    _playing_chips: int
 
     def __init__(self, player: Optional[Player]) -> None:
         """Initialize an PlayerNode which is empty."""
@@ -63,3 +66,16 @@ class PlayerNode:
     def get_in_game(self) -> bool:
         """Get the in_game variable of the PlayerNode."""
         return self._in_game
+
+    def fold(self) -> None:
+        """The Player folds hands.
+        """
+
+    def bet(self, min: int) -> bool:
+        """The Player bet certain amount of chips, and it should be greater than
+         or equal to the minimum amount <min>.
+         """
+
+    def win(self, amount: int) -> None:
+        """The Player wins <amount> chips, and added chips to _playing_chips.
+        """

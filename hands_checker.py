@@ -30,7 +30,7 @@ class HandsChecker:
             if number > 4:
                 suit = s
             else:
-                return self._full_house(cards)
+                return self._four_of_a_kind(cards)
         suited_cards = []
         for card in cards:
             if card.suit == suit:
@@ -40,7 +40,21 @@ class HandsChecker:
         if self._straight(suited_cards)[0] == 'straight':
             return 'straight flush', self._straight(suited_cards)[1]
         else:
-            return self._full_house(cards)
+            return self._four_of_a_kind(cards)
+
+    def _four_of_a_kind(self, cards: List[Card]) -> Tuple[str, List[Card]]:
+        """Return "four of a kind" and five cards make four of a kind in Tuple
+        iff <cards> makes a four of a kind, otherwise return the result of
+        running _full_house with <cards>.
+        """
+        numbers = {}
+        for card in cards:
+            if card.number not in numbers:
+                numbers[card.number] = 0
+            else:
+                numbers[card.number] += 1
+
+
 
     def _full_house(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "full house" and five cards make full house in Tuple iff
