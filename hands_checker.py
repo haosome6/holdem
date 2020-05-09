@@ -112,8 +112,6 @@ class HandsChecker:
         return 'full house', res
 
 
-
-
     def _flush(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "flush" and five cards make flush in Tuple iff <cards> makes a
         flush, otherwise return the result of running _straight with <cards>.
