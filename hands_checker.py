@@ -143,6 +143,25 @@ class HandsChecker:
         makes a three of kind, otherwise return the result of running _two_pair
         with <cards>.
         """
+        numbers = _number_checker(cards)
+        # the tuple max_card records the number and the number of occurrence of
+        # the card with the highest occurrence time
+        max_card = _most_frequent_number(numbers)
+        if max_card[1] < 3:
+            return self._two_pair(cards)
+        else:
+            res = []
+            # a list which records the cards that do not form the four of a kind
+            temple_cards = []
+            for card in cards:
+                if card.number == max_card[0]:
+                    res.append(card)
+                else:
+                    temple_cards.append(card)
+            temple_cards.sort()
+            res.append(temple_cards[-1])
+            res.append(temple_cards[-2])
+            return 'four of a kind', res
 
     def _two_pair(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "two pair" and five cards make it in Tuple iff <cards> makes a
