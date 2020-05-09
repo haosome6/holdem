@@ -193,15 +193,30 @@ class HandsChecker:
                 temple_cards.append(card)
         temple_cards.sort()
         return 'two pair', res1 + res2 + [temple_cards[-1]]
-            
+
     def _one_pair(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "one pair" and five cards make it in Tuple iff <cards> makes a
         one pair, otherwise return the result of running _high_card with <cards>.
         """
+        numbers = _number_checker(cards)
+        max_card = _most_frequent_numbers(numbers)[0]
+        if max_card[1] < 2:
+            return self._high_card(cards)
+        res = []
+        temple_cards = []
+        for card in cards:
+            if card.number == max_card[0]:
+                res.append(card)
+            else:
+                temple_cards.append(card)
+        temple_cards.sort(reverse=True)
+        return 'one pair', res + temple_cards[:3]
 
     def _high_card(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "high card" and five biggest cards in <cards> by descending
         order."""
+        cards.sort(reverse=True)
+        return 'high card', cards[:5]
 
     def _check_hands(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return the strongest hand <cards> can make, and five cards make it.
