@@ -25,6 +25,7 @@ def _number_checker(cards: List[Card]) -> Dict[str, int]:
             numbers[card.number] += 1
     return numbers
 
+
 def _most_frequent_number(numbers: Dict[str, int]) -> Tuple[str, int]:
     """Return a tuple which records the number and number of occurrence of the
     most frequent number in a given map of number and number of occurrence."""
@@ -111,11 +112,25 @@ class HandsChecker:
                         res.append(card)
         return 'full house', res
 
-
     def _flush(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "flush" and five cards make flush in Tuple iff <cards> makes a
         flush, otherwise return the result of running _straight with <cards>.
         """
+        suits = _suit_checker(cards)
+        suit = ''
+
+        # if there are more than 5 cards have same suit, extract them
+        for s, number in suits.items():
+            if number > 4:
+                suit = s
+            else:
+                return self._straight(cards)
+        suited_cards = []
+        for card in cards:
+            if card.suit == suit:
+                suited_cards.append(card)
+        suited_cards.sort()
+        return 'flush', suited_cards
 
     def _straight(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "straight" and five cards make straight in Tuple iff <cards>
