@@ -26,14 +26,21 @@ def _number_checker(cards: List[Card]) -> Dict[str, int]:
     return numbers
 
 
-def _most_frequent_number(numbers: Dict[str, int]) -> Tuple[str, int]:
-    """Return a tuple which records the number and number of occurrence of the
-    most frequent number in a given map of number and number of occurrence."""
+def _most_frequent_numbers(numbers: Dict[str, int]) -> List[Tuple[str, int]]:
+    """Return a list of tuples which records the number and number of occurrence
+    of the most frequent number in a given map of number and number of
+    occurrence."""
     max_card = (None, 0)
+    res = []
     for number, occurrence in numbers.items():
         if occurrence > max_card[1]:
             max_card = (number, occurrence)
-    return max_card
+            res = [max_card]
+        elif occurrence == max_card[1]:
+            res.append((number, occurrence))
+    # sort the list by the number of the most frequent cards.
+    res.sort(key=lambda item: item[0])
+    return res
 
 
 class HandsChecker:
@@ -73,7 +80,7 @@ class HandsChecker:
         numbers = _number_checker(cards)
         # the tuple max_card records the number and the number of occurrence of
         # the card with the highest occurrence time
-        max_card = _most_frequent_number(numbers)
+        max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 4:
             return self._full_house(cards)
         else:
@@ -94,12 +101,12 @@ class HandsChecker:
         _flush with <cards>.
         """
         numbers = _number_checker(cards)
-        max_card = _most_frequent_number(numbers)
+        max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 3:
             return self._flush(cards)
         else:
             del numbers[max_card[0]]
-            second_max_card = _most_frequent_number(numbers)
+            second_max_card = _most_frequent_numbers(numbers)[0]
             if second_max_card[1] < 2:
                 return self._flush(cards)
             else:
@@ -108,7 +115,7 @@ class HandsChecker:
                     if card.number == max_card:
                         res.append(card)
                 for card in cards:
-                    if card.number == second_max_card:
+                    if card.number == second_max_card and len(res) < 5:
                         res.append(card)
         return 'full house', res
 
@@ -146,7 +153,7 @@ class HandsChecker:
         numbers = _number_checker(cards)
         # the tuple max_card records the number and the number of occurrence of
         # the card with the highest occurrence time
-        max_card = _most_frequent_number(numbers)
+        max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 3:
             return self._two_pair(cards)
         else:
@@ -167,7 +174,26 @@ class HandsChecker:
         """Return "two pair" and five cards make it in Tuple iff <cards> makes a
         two pair, otherwise return the result of running _one_pair with <cards>.
         """
-
+        numbers = _number_checker(cards)
+        max_cards = _most_frequent_numbers(numbers)
+        if len(max_cards) < 2:
+            return self._one_pair(cards)
+        else:
+            max_number1 = max_cards[0][0]
+            max_number2 = max_cards[1][0]
+        res1 = []
+        res2 = []
+        temple_cards = []
+        for card in cards:
+            if card.number == max_number1:
+                res1.append(card)
+            if card.number == max_number2:
+                res2.append(card)
+            else:
+                temple_cards.append(card)
+        temple_cards.sort()
+        return 'two pair', res1 + res2 + [temple_cards[-1]]
+            
     def _one_pair(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "one pair" and five cards make it in Tuple iff <cards> makes a
         one pair, otherwise return the result of running _high_card with <cards>.
