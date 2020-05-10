@@ -52,25 +52,31 @@ class HandsChecker:
         iff <cards> makes a straight flush, otherwise return the result of
         running _full_house with <cards>.
         """
-        suits = _suit_checker(cards)
+        suits_occurrence = _suit_checker(cards)
         suit = ''
 
-        # if there are more than 5 cards have same suit, extract them
-        for s, number in suits.items():
-            if number > 4:
-                suit = s
-            else:
-                return self._four_of_a_kind(cards)
+        # if there are more than 4 cards have same suit, extract them
+        max_occurrence = max(suits_occurrence.values())
+        if max_occurrence < 5:
+            return self._four_of_a_kind(cards)
+        else:
+            for s, occurrence in suits_occurrence.items():
+                if occurrence >= 5:
+                    suit = s
         suited_cards = []
-        for card in cards:
-            if card.suit == suit:
-                suited_cards.append(card)
+        cards.sort(reverse=True)
+        i = 0
+        while len(suited_cards) <= 5 and i < len(cards):
+            if cards[i].suit == suit:
+                suited_cards.append(cards[i])
+            i += 1
 
-        # if suited cards have flush, then it's a straight flush
+        # suited cards is either straight flush, or flush;
+        # more than 4 suited cards can't make four of a kind, nor full house
         if self._straight(suited_cards)[0] == 'straight':
             return 'straight flush', self._straight(suited_cards)[1]
         else:
-            return self._four_of_a_kind(cards)
+            return 'flush', suited_cards
 
     def _four_of_a_kind(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "four of a kind" and five cards make four of a kind in Tuple
@@ -103,12 +109,12 @@ class HandsChecker:
         numbers = _number_checker(cards)
         max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 3:
-            return self._flush(cards)
+            return self._straight(cards)
         else:
             del numbers[max_card[0]]
             second_max_card = _most_frequent_numbers(numbers)[0]
             if second_max_card[1] < 2:
-                return self._flush(cards)
+                return self._straight(cards)
             else:
                 res = []
                 for card in cards:
@@ -119,25 +125,7 @@ class HandsChecker:
                         res.append(card)
         return 'full house', res
 
-    def _flush(self, cards: List[Card]) -> Tuple[str, List[Card]]:
-        """Return "flush" and five cards make flush in Tuple iff <cards> makes a
-        flush, otherwise return the result of running _straight with <cards>.
-        """
-        suits = _suit_checker(cards)
-        suit = ''
-
-        # if there are more than 5 cards have same suit, extract them
-        for s, number in suits.items():
-            if number > 4:
-                suit = s
-            else:
-                return self._straight(cards)
-        suited_cards = []
-        for card in cards:
-            if card.suit == suit:
-                suited_cards.append(card)
-        suited_cards.sort()
-        return 'flush', suited_cards
+    # no need for flush checker, which is done in _straight_flush
 
     def _straight(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "straight" and five cards make straight in Tuple iff <cards>
