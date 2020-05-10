@@ -109,12 +109,12 @@ class HandsChecker:
         numbers = _number_checker(cards)
         max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 3:
-            return self._flush(cards)
+            return self._straight(cards)
         else:
             del numbers[max_card[0]]
             second_max_card = _most_frequent_numbers(numbers)[0]
             if second_max_card[1] < 2:
-                return self._flush(cards)
+                return self._straight(cards)
             else:
                 res = []
                 for card in cards:
