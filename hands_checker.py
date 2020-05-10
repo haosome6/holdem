@@ -215,10 +215,9 @@ class HandsChecker:
     def get_hands_type(self, cards: List[Card]) -> str:
         """Return the name of the strongest hand that <cards> can make.
         """
-        checked_hands = self._check_hands(cards)
-        return checked_hands[0]
+        return self._check_hands(cards)[0]
 
     def get_hands_cards(self, cards: List[Card]) -> List[Card]:
         """Return the five cards that make strongest hand.
         """
-        return (self._straight_flush(cards))[1]
+        return self._check_hands(cards)[1]
