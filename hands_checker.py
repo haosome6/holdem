@@ -158,7 +158,8 @@ class HandsChecker:
             return self._two_pair(cards)
         else:
             res = []
-            # a list which records the cards that do not form the four of a kind
+            # a list which records the cards that do not form the three of a
+            # kind
             temple_cards = []
             for card in cards:
                 if card.number == max_card[0]:
@@ -168,7 +169,7 @@ class HandsChecker:
             temple_cards.sort()
             res.append(temple_cards[-1])
             res.append(temple_cards[-2])
-            return 'four of a kind', res
+            return 'three of a kind', res
 
     def _two_pair(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "two pair" and five cards make it in Tuple iff <cards> makes a
@@ -221,11 +222,15 @@ class HandsChecker:
     def _check_hands(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return the strongest hand <cards> can make, and five cards make it.
         """
+        return self._straight_flush(cards)
 
     def get_hands_type(self, cards: List[Card]) -> str:
         """Return the name of the strongest hand that <cards> can make.
         """
+        checked_hands = self._check_hands(cards)
+        return checked_hands[0]
 
     def get_hands_cards(self, cards: List[Card]) -> List[Card]:
         """Return the five cards that make strongest hand.
         """
+        return (self._straight_flush(cards))[1]
