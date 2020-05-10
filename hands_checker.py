@@ -30,13 +30,12 @@ def _most_frequent_numbers(numbers: Dict[str, int]) -> List[Tuple[str, int]]:
     """Return a list of tuples which records the number and number of occurrence
     of the most frequent number in a given map of number and number of
     occurrence."""
-    max_card = (None, 0)
+    max_occurrence = 0
     res = []
     for number, occurrence in numbers.items():
-        if occurrence > max_card[1]:
-            max_card = (number, occurrence)
-            res = [max_card]
-        elif occurrence == max_card[1]:
+        if occurrence > max_occurrence:
+            res = [(number, occurrence)]
+        elif occurrence == max_occurrence:
             res.append((number, occurrence))
     # sort the list by the number of the most frequent cards.
     res.sort(key=lambda item: item[0])
