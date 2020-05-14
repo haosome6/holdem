@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Tuple, Dict, List
 from card import Card
+from card import compare_map
 
 
 def _suit_checker(cards: List[Card]) -> Dict[str, int]:
@@ -42,6 +43,21 @@ def _most_frequent_numbers(numbers: Dict[str, int]) -> List[Tuple[str, int]]:
     return res
 
 
+def _delete_duplicates(cards: List[Card]) -> List[Card]:
+    """Return a list of cards that each number appear at most once.
+    """
+    result = []
+    i = 0
+    while i < len(cards):
+        existed = False
+        for card in result:
+            if card == cards[i]:
+                existed = True
+        if not existed:
+            result.append(cards[i])
+    return result
+
+
 class HandsChecker:
     """To check the strength of hands.
     """
@@ -72,8 +88,9 @@ class HandsChecker:
 
         # suited cards is either straight flush, or flush;
         # more than 4 suited cards can't make four of a kind, nor full house
-        if self._straight(suited_cards)[0] == 'straight':
-            return 'straight flush', self._straight(suited_cards)[1]
+        straight_result = self._straight(suited_cards)
+        if straight_result[0] == 'straight':
+            return 'straight flush', straight_result[1]
         else:
             return 'flush', suited_cards
 
@@ -131,6 +148,26 @@ class HandsChecker:
         makes a straight, otherwise return the result of running
         _three_of_a_kind with <cards>.
         """
+        cards_no_dpc = _delete_duplicates(cards)
+        if len(cards_no_dpc) < 5:
+            return self._three_of_a_kind(cards)
+
+        # find the index where straight starts
+        i = 0
+        index = None
+        while i + 4 < len(cards_no_dpc):
+            if compare_map[cards_no_dpc[i]] - 4 == compare_map[cards_no_dpc[i+4]]:
+                index = i
+                break
+            i += 1
+
+        if index is not None:
+            return 'straight', cards_no_dpc[index : index + 5]
+        # special case 5, 4, 3, 2, A
+        elif cards_no_dpc[-4].number == '5' and cards_no_dpc[0].number == 'A':
+            return 'straight', cards_no_dpc[-4:] + [cards_no_dpc[0]]
+        else:
+            return self._three_of_a_kind(cards)
 
     def _three_of_a_kind(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return "three of a kind" and five cards make it in Tuple iff <cards>
