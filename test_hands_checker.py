@@ -9,7 +9,7 @@ def test_straight_flush() -> None:
     cK = Card('K', 's')
     cQ = Card('Q', 's')
     cJ = Card('J', 's')
-    cT = Card('T', 's')
+    cT = Card('10', 's')
     c5 = Card('5', 's')
     c3h = Card('3', 'h')
 
@@ -68,5 +68,4 @@ def test_flush() -> None:
 
 if __name__ == "__main__":
     import pytest
-
     pytest.main(['test_hands_checker.py'])
