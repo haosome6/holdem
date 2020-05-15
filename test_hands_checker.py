@@ -66,6 +66,24 @@ def test_flush() -> None:
     assert result_cards[-1].number == '3'
 
 
+def test_full_house() -> None:
+    c9s = Card('9', 's')
+    c9h = Card('9', 'h')
+    c9c = Card('9', 'c')
+    cAd = Card('A', 'd')
+    cAs = Card('A', 's')
+    cAc = Card('A', 'c')
+
+    # four of a kind of 9, with kicker A
+    cards_1 = [cAd, c9h, cAs, c9s, c9c, cAc]
+    assert hands_checker.get_hands_type(cards_1) == 'full house'
+    assert len(hands_checker.get_hands_cards(cards_1)) == 5
+    assert hands_checker.get_hands_cards(cards_1)[0].number == 'A'
+    assert hands_checker.get_hands_cards(cards_1)[3].number == '9'
+    assert hands_checker.get_hands_cards(cards_1)[-1].number == '9'
+
+
 if __name__ == "__main__":
     import pytest
+
     pytest.main(['test_hands_checker.py'])
