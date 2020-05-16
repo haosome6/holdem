@@ -133,6 +133,41 @@ def test_straight2() -> None:
     assert hands_checker.get_hands_cards(cards_1)[-1].number == 'A'
 
 
+def test_three_of_a_kind() -> None:
+    cAs = Card('A', 's')
+    c5h = Card('5', 'h')
+    c5c = Card('5', 'c')
+    c5d = Card('5', 'd')
+    c8s = Card('8', 's')
+    cQc = Card('Q', 'c')
+    cJd = Card('J', 'd')
+
+    cards_1 = [cJd, c5d, cAs, c5c, c5h, cQc, c8s]
+    assert hands_checker.get_hands_type(cards_1) == 'three of a kind'
+    assert len(hands_checker.get_hands_cards(cards_1)) == 5
+    assert hands_checker.get_hands_cards(cards_1)[0].number == '5'
+    assert hands_checker.get_hands_cards(cards_1)[2].number == '5'
+    assert hands_checker.get_hands_cards(cards_1)[-2].number == 'A'
+    assert hands_checker.get_hands_cards(cards_1)[-1].number == 'Q'
+
+
+def test_two_pair() -> None:
+    cAs = Card('A', 's')
+    cAh = Card('A', 'h')
+    c5c = Card('5', 'c')
+    c5d = Card('5', 'd')
+    c8s = Card('8', 's')
+    cQc = Card('Q', 'c')
+    cJd = Card('J', 'd')
+
+    cards_1 = [cJd, c5d, cAs, c5c, cAh, cQc, c8s]
+    assert hands_checker.get_hands_type(cards_1) == 'two pair'
+    assert len(hands_checker.get_hands_cards(cards_1)) == 5
+    assert hands_checker.get_hands_cards(cards_1)[0].number == 'A'
+    assert hands_checker.get_hands_cards(cards_1)[2].number == '5'
+    assert hands_checker.get_hands_cards(cards_1)[-2].number == 'Q'
+    assert hands_checker.get_hands_cards(cards_1)[-1].number == 'J'
+
 if __name__ == "__main__":
     import pytest
 
