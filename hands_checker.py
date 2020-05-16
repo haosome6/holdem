@@ -40,7 +40,7 @@ def _most_frequent_numbers(numbers: Dict[str, int]) -> List[Tuple[str, int]]:
         elif occurrence == max_occurrence:
             res.append((number, occurrence))
     # sort the list by the number of the most frequent cards.
-    res.sort(key=lambda item: item[0])
+    res.sort(key=lambda item: item[0], reverse=True)
     return res
 
 
@@ -138,10 +138,10 @@ class HandsChecker:
             else:
                 res = []
                 for card in cards:
-                    if card.number == max_card:
+                    if card.number == max_card[0]:
                         res.append(card)
                 for card in cards:
-                    if card.number == second_max_card and len(res) < 5:
+                    if card.number == second_max_card[0] and len(res) < 5:
                         res.append(card)
         return 'full house', res
 
@@ -217,7 +217,7 @@ class HandsChecker:
         for card in cards:
             if card.number == max_number1:
                 res1.append(card)
-            if card.number == max_number2:
+            elif card.number == max_number2:
                 res2.append(card)
             else:
                 temple_cards.append(card)
