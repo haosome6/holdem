@@ -21,7 +21,7 @@ def _number_checker(cards: List[Card]) -> Dict[str, int]:
     numbers = {}
     for card in cards:
         if card.number not in numbers:
-            numbers[card.number] = 0
+            numbers[card.number] = 1
         else:
             numbers[card.number] += 1
     return numbers
@@ -35,6 +35,7 @@ def _most_frequent_numbers(numbers: Dict[str, int]) -> List[Tuple[str, int]]:
     res = []
     for number, occurrence in numbers.items():
         if occurrence > max_occurrence:
+            max_occurrence = occurrence
             res = [(number, occurrence)]
         elif occurrence == max_occurrence:
             res.append((number, occurrence))
