@@ -227,7 +227,7 @@ class HandsChecker:
         numbers = _number_checker(cards)
         max_card = _most_frequent_numbers(numbers)[0]
         if max_card[1] < 2:
-            return _high_card(cards)
+            return self._high_card(cards)
         res = []
         temple_cards = []
         for card in cards:
