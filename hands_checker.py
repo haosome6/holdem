@@ -55,6 +55,7 @@ def _delete_duplicates(cards: List[Card]) -> List[Card]:
                 existed = True
         if not existed:
             result.append(cards[i])
+        i += 1
     result.sort(reverse=True)
     return result
 
