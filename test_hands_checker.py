@@ -168,6 +168,23 @@ def test_two_pair() -> None:
     assert hands_checker.get_hands_cards(cards_1)[-2].number == 'Q'
     assert hands_checker.get_hands_cards(cards_1)[-1].number == 'J'
 
+def test_one_pair() -> None:
+    cAs = Card('A', 's')
+    cKh = Card('K', 'h')
+    c5c = Card('5', 'c')
+    c5d = Card('5', 'd')
+    c8s = Card('8', 's')
+    cQc = Card('Q', 'c')
+    cJd = Card('J', 'd')
+
+    cards_1 = [cJd, c5d, cAs, c5c, cKh, cQc, c8s]
+    assert hands_checker.get_hands_type(cards_1) == 'one pair'
+    assert len(hands_checker.get_hands_cards(cards_1)) == 5
+    assert hands_checker.get_hands_cards(cards_1)[0].number == '5'
+    assert hands_checker.get_hands_cards(cards_1)[2].number == 'A'
+    assert hands_checker.get_hands_cards(cards_1)[-2].number == 'K'
+    assert hands_checker.get_hands_cards(cards_1)[-1].number == 'Q'
+
 if __name__ == "__main__":
     import pytest
 
