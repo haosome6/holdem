@@ -117,7 +117,8 @@ class HandsChecker:
                     res.append(card)
                 else:
                     temple_cards.append(card)
-            res.append(temple_cards.sort()[-1])
+            temple_cards.sort(reverse=True)
+            res.append(temple_cards[0])
             return 'four of a kind', res
 
     def _full_house(self, cards: List[Card]) -> Tuple[str, List[Card]]:
