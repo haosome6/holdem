@@ -84,7 +84,7 @@ class HandsChecker:
         suited_cards = []
         cards.sort(reverse=True)
         i = 0
-        while len(suited_cards) <= 5 and i < len(cards):
+        while len(suited_cards) < 5 and i < len(cards):
             if cards[i].suit == suit:
                 suited_cards.append(cards[i])
             i += 1
