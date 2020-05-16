@@ -59,13 +59,6 @@ def _delete_duplicates(cards: List[Card]) -> List[Card]:
     return result
 
 
-def _high_card(cards: List[Card]) -> Tuple[str, List[Card]]:
-    """Return "high card" and five biggest cards in <cards> by descending
-    order."""
-    cards.sort(reverse=True)
-    return 'high card', cards[:5]
-
-
 class HandsChecker:
     """To check the strength of hands.
     """
@@ -244,6 +237,12 @@ class HandsChecker:
                 temple_cards.append(card)
         temple_cards.sort(reverse=True)
         return 'one pair', res + temple_cards[:3]
+
+    def _high_card(self, cards: List[Card]) -> Tuple[str, List[Card]]:
+        """Return "high card" and five biggest cards in <cards> by descending
+        order."""
+        cards.sort(reverse=True)
+        return 'high card', cards[:5]
 
     def _check_hands(self, cards: List[Card]) -> Tuple[str, List[Card]]:
         """Return the strongest hand <cards> can make, and five cards make it.
