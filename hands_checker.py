@@ -158,7 +158,8 @@ class HandsChecker:
         i = 0
         index = None
         while i + 4 < len(cards_no_dpc):
-            if compare_map[cards_no_dpc[i]] - 4 == compare_map[cards_no_dpc[i+4]]:
+            if compare_map[cards_no_dpc[i].number] - 4 == \
+                    compare_map[cards_no_dpc[i+4].number]:
                 index = i
                 break
             i += 1
