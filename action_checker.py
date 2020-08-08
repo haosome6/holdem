@@ -22,6 +22,21 @@ class ActionChecker:
     _biggest_bet: int
     _min_valid_raise: int
 
+    def __init__(self, big_blind: int) -> None:
+        """At the beginning of the game, the biggest bet is the big blind, and
+        the min valid raise amount is two times the big blind.
+        """
+        self._biggest_bet = big_blind
+        self._min_valid_raise = big_blind * 2
+
+    # set_new_street, street就是每一回合，flop是第一次发出三张公共牌的回合，turn是第四张，
+    # river是第五张，这段看完可以删掉
+    def set_new_street(self) -> None:
+        """At the beginning of the flop, turn, and river, biggest bet and
+        minimum valid raise should be re-set to zero.
+        """
+        self._biggest_bet, self._min_valid_raise = 0, 0
+
     def set_biggest_bet(self, amount: int) -> None:
         pass
 
@@ -31,13 +46,13 @@ class ActionChecker:
     def set_min_valid_raise(self, amount: int) -> None:
         pass
 
-    def get_biggest_bet(self) -> int:
+    def get_min_valid_raise(self) -> int:
         pass
 
-    def valid_action(self, amount: int) -> bool:
+    def valid_action(self, bet_amount: int) -> bool:
         """A player's call equals the current biggest bet; or a raise which
         following the rules above. However, the player always have the option to
         all-in, this decision is valid regardless of what the current biggest
         bet is.
         """
-
+        pass
