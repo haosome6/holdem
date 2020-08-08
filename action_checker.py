@@ -37,22 +37,31 @@ class ActionChecker:
         """
         self._biggest_bet, self._min_valid_raise = 0, 0
 
-    def set_biggest_bet(self, amount: int) -> None:
-        pass
-
     def get_biggest_bet(self) -> int:
-        pass
-
-    def set_min_valid_raise(self, amount: int) -> None:
-        pass
+        return self._biggest_bet
 
     def get_min_valid_raise(self) -> int:
-        pass
+        return self._min_valid_raise
 
-    def valid_action(self, bet_amount: int) -> bool:
+    def check_valid_action(self, bet_amount: int, is_all_in: bool) -> bool:
         """A player's call equals the current biggest bet; or a raise which
         following the rules above. However, the player always have the option to
         all-in, this decision is valid regardless of what the current biggest
         bet is.
         """
-        pass
+        if bet_amount == self._biggest_bet:
+            return True
+        # bet_amount not equal to _biggest_bet, it has to equal to or
+        # greater than _min_valid_raise, otherwise it's invalid
+        elif bet_amount >= self._min_valid_raise:
+            self._min_valid_raise = bet_amount * 2 - self._biggest_bet
+            self._biggest_bet = bet_amount
+            return True
+        else:
+            # bet_amount is not equal to _biggest_bet, and less than
+            # _min_valid_raise, it's valid iff it's all in
+            if is_all_in:
+                self._biggest_bet = max(self._biggest_bet, bet_amount)
+                return True
+            else:
+                return False
