@@ -2,6 +2,8 @@ class ActionChecker:
     """To check if the Player's betting is valid.
 
     === Private Attributes ===
+    _big_blind:
+        the big blind of the table
     _biggest_bet:
         current biggest bet on the table
     _min_valid_raise:
@@ -19,6 +21,7 @@ class ActionChecker:
     again. In this case, _biggest_bet becomes the all-in, but _min_valid_raise
     stays the same.
     """
+    _big_blind: int
     _biggest_bet: int
     _min_valid_raise: int
 
@@ -26,6 +29,7 @@ class ActionChecker:
         """At the beginning of the game, the biggest bet is the big blind, and
         the min valid raise amount is two times the big blind.
         """
+        self._big_blind = big_blind
         self._biggest_bet = big_blind
         self._min_valid_raise = big_blind * 2
 
@@ -35,7 +39,7 @@ class ActionChecker:
         """At the beginning of the flop, turn, and river, biggest bet and
         minimum valid raise should be re-set to zero.
         """
-        self._biggest_bet, self._min_valid_raise = 0, 0
+        self._biggest_bet, self._min_valid_raise = 0, self._big_blind
 
     def get_biggest_bet(self) -> int:
         return self._biggest_bet
@@ -49,7 +53,7 @@ class ActionChecker:
         all-in, this decision is valid regardless of what the current biggest
         bet is.
         """
-        if bet_amount == self._biggest_bet:
+        if bet_amount == self._biggest_bet and self._biggest_bet != 0:
             return True
         # bet_amount not equal to _biggest_bet, it has to equal to or
         # greater than _min_valid_raise, otherwise it's invalid
