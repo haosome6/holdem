@@ -10,72 +10,69 @@ class PlayerNode:
     """A player node in a player linked list
 
     === Attributes ===
-    _item:
-        The player in that position, or an integer if the node is empty.
-    _hands:
-        A list of Cards that held by the player.
-    _betting:
-        An integer which represent the amount of betting of the player.
-    _in_game:
-        A boolean which indicate whether the player is involved in the game or
+    player:
+        The player in that position.
+    in_game:
+        A boolean which indicate whether the player is in the current game or
         not.
+    _hands:
+        Two Cards the player is holding.
+    _betting_amount:
+        The player's betting amount for the current street.
+    _playing_chips:
+        The player's chips left on the table.
     next:
-        The next node in the player linked list, or None if there are no more nodes.
-    playing_chips:
-        The chips that a player is playing on the table.
-    """
-    _player: Optional[Player]
-    _hands: list[Card]
-    _betting: int
-    _in_game: bool
-    next: Optional[PlayerNode]
-    _playing_chips: int
+        The next node in the player linked list, or None if there are no more
+        nodes.
 
-    def __init__(self, player: Optional[Player]) -> None:
-        """Initialize an PlayerNode which is empty."""
-        self._player = player
+    === Representation Invariant ===
+    _playing_chips is always greater than or equal to zero.
+    """
+    player: Optional[Player]
+    in_game: bool
+    _hands: list[Card]
+    _betting_amount: int
+    _playing_chips: int
+    next: Optional[PlayerNode]
+
+    def set_player(self, player: Player, chips_bring_in: int) -> None:
+        """Add a player on the node.
+        """
+        self.player = player
+        self.in_game = False
+        self._hands = []
+        self._betting_amount = 0
+        self._playing_chips = chips_bring_in
 
     def set_hands(self, hands: list[Card]) -> None:
-        """Set the current hands of the PlayerNode by given a list of cards."""
+        """Set the current hands of the PlayerNode by given a list of cards.
+        """
         self._hands = hands
 
     def get_hands(self) -> list[Card]:
-        """Get the hands of the PlayerNode."""
+        """Get the hands of the PlayerNode.
+        """
         return self._hands
 
-    def set_betting(self, amount: int) -> None:
-        """Set the betting of the PlayerNode by a given amount."""
-        self._betting = amount
-
-    def get_betting(self) -> int:
-        """Get the amount of betting of the PlayerNode."""
-        return self._betting
-
-    def set_player(self, player: Optional[Player]) -> None:
-        """Set the player or null of the PlayerNode."""
-        self._player = player
-
-    def get_player(self) -> Optional[Player]:
-        """Get the player of the PlayerNode."""
-        return self._player
-
-    def set_in_game(self, in_game: bool) -> None:
-        """Set the _in_game variable of the PlayerNode by a given bool"""
-        self._in_game = in_game
-
-    def get_in_game(self) -> bool:
-        """Get the in_game variable of the PlayerNode."""
-        return self._in_game
-
-    def fold(self) -> None:
+    def fold_hands(self) -> list[Card]:
         """The Player folds hands.
         """
+        cards = []
+        cards, self._hands = self._hands, cards
+        return cards
 
-    def bet(self, min: int) -> bool:
-        """The Player bet certain amount of chips, and it should be greater than
-         or equal to the minimum amount <min>.
-         """
-
-    def win(self, amount: int) -> None:
-        """The Player wins <amount> chips, and added chips to _playing_chips.
+    def add_to_betting_amount(self, amount: int) -> None:
+        """Add player's betting.
         """
+        self._betting_amount += amount
+        self._playing_chips -= amount
+
+    def get_betting_amount(self) -> int:
+        """Get the amount of betting of the PlayerNode.
+        """
+        return self._betting_amount
+
+    def add_to_playing_chips(self, amount: int) -> None:
+        """Add chips to player's _playing_chips.
+        """
+        self._playing_chips += amount
