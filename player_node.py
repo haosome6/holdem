@@ -35,6 +35,10 @@ class PlayerNode:
     _playing_chips: int
     next: Optional[PlayerNode]
 
+    def __init__(self) -> None:
+        self.player = None
+        self.in_game = False
+
     def set_player(self, player: Player, chips_bring_in: int) -> None:
         """Add a player on the node.
         """
