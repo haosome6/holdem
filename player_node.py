@@ -39,7 +39,12 @@ class PlayerNode:
         self.player = None
         self.in_game = False
 
-    def set_player(self, player: Player, chips_bring_in: int) -> None:
+    def is_empty(self) -> bool:
+        """Return whether this node is empty.
+        """
+        return self.player is None
+
+    def add_player(self, player: Player, chips_bring_in: int) -> None:
         """Add a player on the node.
         """
         self.player = player
@@ -47,6 +52,13 @@ class PlayerNode:
         self._hands = []
         self._betting_amount = 0
         self._playing_chips = chips_bring_in
+
+    def remove_player(self) -> int:
+        """Remove player from the node. Return the number of chips player have.
+        """
+        self.player = None
+        self.in_game = False
+        return self._playing_chips
 
     def set_hands(self, hands: list[Card]) -> None:
         """Set the current hands of the PlayerNode by given a list of cards.
