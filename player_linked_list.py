@@ -47,26 +47,54 @@ class PlayersLinkedList:
             curr_index += 1
         return curr
 
-    def get_next_player(self, curr: PlayerNode) -> PlayerNode:
-        """"Get next PlayerNode with player after <curr>.
+    def get_player_by_index(self, index: int) -> PlayerNode:
+        """"Get <index>-th PlayerNode with player after button.
         """
-        while curr.next.player is None:
+        curr = self.button
+        while index > 0:
+            if curr.next.player is not None:
+                index -= 1
+            curr = curr.next
+        return curr
+
+    def get_next_player(self, player: PlayerNode) -> PlayerNode:
+        """Get next player after <player>. Return <player> if there is no other
+        players.
+        """
+        curr = player
+        while curr.next.is_empty() and curr.next != player:
             curr = curr.next
         return curr.next
 
-    def get_small_blind(self) -> PlayerNode:
-        """Return the PlayerNode with small blind of current round.
+    def add_player(self, index: int, player: Player, chips_bring_in: int) \
+            -> bool:
+        """Return true if and only if the player is added successfully in the
+        PlayersLinkedList.
+        """
+        if self[index].is_empty():
+            self[index].add_player(player, chips_bring_in)
+            # set the first player on the table as button
+            if self.button is None:
+                self.button = self[index]
+            return True
+        return False
+
+    def remove_player(self, username: str) -> bool:
+        """Return true if and only if remove player with name <username> from
+        this list successfully.
         """
         curr = self.button
-        return self.get_next_player(curr)
 
-    def add_player(self, index: int, player: Player) -> bool:
-        """Return true if the player is added successfully in the
-        PlayersLinkedList, otherwise return false.
-        """
-        pass
+        while curr.next != self.button:
+            if not curr.next.is_empty() and \
+                    curr.next.player.username == username:
+                curr.next.remove_player()
+                return True
+            curr = curr.next
 
-    def delete_player(self, player: Player) -> None:
-        """Delete the given player from the PlayersLinkedList.
-        """
-        pass
+        if self.button.player.username == username:
+            self.button.remove_player()
+            self.button = self.get_next_player(self.button)
+            return True
+        else:
+            return False
