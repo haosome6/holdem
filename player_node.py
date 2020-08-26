@@ -60,6 +60,15 @@ class PlayerNode:
         self.in_game = False
         return self._playing_chips
 
+    def get_next_player(self) -> PlayerNode:
+        """Get next player after this PlayerNode. Return self if there is no
+        other players after.
+        """
+        curr = self
+        while curr.next.is_empty() and curr.next != self:
+            curr = curr.next
+        return curr.next
+
     def set_hands(self, hands: list[Card]) -> None:
         """Set the current hands of the PlayerNode by given a list of cards.
         """

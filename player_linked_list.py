@@ -57,15 +57,6 @@ class PlayersLinkedList:
             curr = curr.next
         return curr
 
-    def get_next_player(self, player: PlayerNode) -> PlayerNode:
-        """Get next player after <player>. Return <player> if there is no other
-        players.
-        """
-        curr = player
-        while curr.next.is_empty() and curr.next != player:
-            curr = curr.next
-        return curr.next
-
     def add_player(self, index: int, player: Player, chips_bring_in: int) \
             -> bool:
         """Return true if and only if the player is added successfully in the
@@ -94,7 +85,7 @@ class PlayersLinkedList:
 
         if self.button.player.username == username:
             self.button.remove_player()
-            self.button = self.get_next_player(self.button)
+            self.button = self.button.get_next_player()
             return True
         else:
             return False
